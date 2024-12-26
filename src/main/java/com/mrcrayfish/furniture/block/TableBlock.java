@@ -21,7 +21,7 @@ import java.util.List;
  * Author: MrCrayfish
  */
 //TODO update forge blockstate once
-public class TableBlock extends FurnitureWaterloggedBlock
+public class TableBlock extends FurnitureHorizontalBlock
 {
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
     public static final BooleanProperty EAST = BooleanProperty.create("east");
@@ -33,13 +33,19 @@ public class TableBlock extends FurnitureWaterloggedBlock
     public TableBlock(Properties properties)
     {
         super(properties);
-        this.registerDefaultState(this.getStateDefinition().any().setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false));
+        this.registerDefaultState(this.getStateDefinition().any()
+                .setValue(NORTH, false)
+                .setValue(EAST, false)
+                .setValue(SOUTH, false)
+                .setValue(WEST, false)
+                .setValue(DIRECTION, Direction.NORTH));
         SHAPES = this.generateShapes(this.getStateDefinition().getPossibleStates());
     }
 
     private ImmutableMap<BlockState, VoxelShape> generateShapes(ImmutableList<BlockState> states)
     {
-        final VoxelShape TABLE_TOP = Block.box(0.0, 14.0, 0.0, 16.0, 16.0, 16.0);
+        //final VoxelShape TABLE_TOP = Block.box(0.0, 14.0, 0.0, 16.0, 16.0, 16.0);
+        final VoxelShape[] TABLE_TOP = VoxelShapeHelper.getRotatedShapes(VoxelShapeHelper.rotate(Block.box(0, 14, 0, 16, 16, 16), Direction.SOUTH));
         final VoxelShape MIDDLE_POST = Block.box(6.0, 0.0, 6.0, 10.0, 14.0, 10.0);
         final VoxelShape END_POST = Block.box(3.0, 0.0, 6.0, 7.0, 14.0, 10.0);
         final VoxelShape CORNER_POST = Block.box(3.0, 0.0, 9.0, 7.0, 14.0, 13.0);
@@ -51,9 +57,10 @@ public class TableBlock extends FurnitureWaterloggedBlock
             boolean east = state.getValue(EAST);
             boolean south = state.getValue(SOUTH);
             boolean west = state.getValue(WEST);
+            Direction direction = state.getValue(DIRECTION);
 
             List<VoxelShape> shapes = new ArrayList<>();
-            shapes.add(TABLE_TOP);
+            shapes.add(TABLE_TOP[direction.get2DDataValue()]);
 
             if(!north & !east && !south && !west)
             {
