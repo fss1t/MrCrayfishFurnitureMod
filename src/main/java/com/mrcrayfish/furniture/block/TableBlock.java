@@ -47,8 +47,8 @@ public class TableBlock extends FurnitureHorizontalBlock
         //final VoxelShape TABLE_TOP = Block.box(0.0, 14.0, 0.0, 16.0, 16.0, 16.0);
         final VoxelShape[] TABLE_TOP = VoxelShapeHelper.getRotatedShapes(VoxelShapeHelper.rotate(Block.box(0, 14, 0, 16, 16, 16), Direction.SOUTH));
         final VoxelShape MIDDLE_POST = Block.box(6.0, 0.0, 6.0, 10.0, 14.0, 10.0);
-        final VoxelShape END_POST = Block.box(3.0, 0.0, 6.0, 7.0, 14.0, 10.0);
-        final VoxelShape CORNER_POST = Block.box(3.0, 0.0, 9.0, 7.0, 14.0, 13.0);
+        //final VoxelShape END_POST = Block.box(3.0, 0.0, 6.0, 7.0, 14.0, 10.0);
+        //final VoxelShape CORNER_POST = Block.box(3.0, 0.0, 9.0, 7.0, 14.0, 13.0);
 
         ImmutableMap.Builder<BlockState, VoxelShape> builder = new ImmutableMap.Builder<>();
         for(BlockState state : states)
