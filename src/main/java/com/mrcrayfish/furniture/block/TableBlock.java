@@ -62,41 +62,8 @@ public class TableBlock extends FurnitureHorizontalBlock
             List<VoxelShape> shapes = new ArrayList<>();
             shapes.add(TABLE_TOP[direction.get2DDataValue()]);
 
-            if(!north & !east && !south && !west)
-            {
+            if(!(north && south || east && west)){
                 shapes.add(MIDDLE_POST);
-            }
-            else if(north & !east && !south && !west)
-            {
-                shapes.add(VoxelShapeHelper.rotate(END_POST, Direction.NORTH));
-            }
-            else if(!north & east && !south && !west)
-            {
-                shapes.add(VoxelShapeHelper.rotate(END_POST, Direction.EAST));
-            }
-            else if(!north & !east && south && !west)
-            {
-                shapes.add(VoxelShapeHelper.rotate(END_POST, Direction.SOUTH));
-            }
-            else if(!north & !east && !south && west)
-            {
-                shapes.add(VoxelShapeHelper.rotate(END_POST, Direction.WEST));
-            }
-            else if(north && east && !south && !west)
-            {
-                shapes.add(VoxelShapeHelper.rotate(CORNER_POST, Direction.EAST));
-            }
-            else if(!north && east && south && !west)
-            {
-                shapes.add(VoxelShapeHelper.rotate(CORNER_POST, Direction.SOUTH));
-            }
-            else if(!north && !east && south && west)
-            {
-                shapes.add(VoxelShapeHelper.rotate(CORNER_POST, Direction.WEST));
-            }
-            else if(north && !east && !south && west)
-            {
-                shapes.add(VoxelShapeHelper.rotate(CORNER_POST, Direction.NORTH));
             }
 
             builder.put(state, VoxelShapeHelper.combineAll(shapes));
