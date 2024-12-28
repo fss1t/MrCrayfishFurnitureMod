@@ -20,7 +20,6 @@ def main():
                 data_i["model"] = f"cfm:block/{type}_table"
 
             data_i["y"] = 0 if facing == "north" else 90 if facing == "east" else 180 if facing == "south" else 270
-            data_i["y"] = (data_i["y"] + 90) % 360
 
             data["variants"][f"north={north},east={east},south={south},west={west},facing={facing}"] = data_i
 
