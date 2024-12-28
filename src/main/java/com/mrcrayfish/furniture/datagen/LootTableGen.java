@@ -1,15 +1,15 @@
 package com.mrcrayfish.furniture.datagen;
 
+import com.google.common.collect.ImmutableList;
+import com.mojang.datafixers.util.Pair;
 import com.mrcrayfish.furniture.Reference;
 import com.mrcrayfish.furniture.block.CoffeeTableBlock;
 import com.mrcrayfish.furniture.core.ModBlocks;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
-import net.minecraft.data.PackOutput;
-import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.flag.FeatureFlagSet;
-import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -18,6 +18,7 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
 import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
@@ -27,8 +28,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -36,23 +38,26 @@ import java.util.stream.Collectors;
  */
 public class LootTableGen extends LootTableProvider
 {
-    public LootTableGen(PackOutput output)
+    private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> tables = ImmutableList.of(Pair.of(BlockProvider::new, LootContextParamSets.BLOCK));
+
+    public LootTableGen(DataGenerator generator)
     {
-        super(output, Set.of(), List.of(new SubProviderEntry(BlockProvider::new, LootContextParamSets.BLOCK)));
+        super(generator);
+    }
+
+    @Override
+    public List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>> getTables()
+    {
+        return this.tables;
     }
 
     @Override
     protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext context) {}
 
-    private static class BlockProvider extends BlockLootSubProvider
+    private static class BlockProvider extends BlockLoot
     {
-        protected BlockProvider()
-        {
-            super(Set.of(), FeatureFlags.REGISTRY.allFlags());
-        }
-
         @Override
-        public void generate()
+        protected void addTables()
         {
             this.dropSelf(ModBlocks.SOFA_WHITE.get());
             this.dropSelf(ModBlocks.SOFA_ORANGE.get());
@@ -226,8 +231,6 @@ public class LootTableGen extends LootTableProvider
         {
             this.add(block, trampoline -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(trampoline).apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY)).apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY).copy("BlockEntityTag.Count", "")))));
         }
-
-
 
         @Override
         protected Iterable<Block> getKnownBlocks()

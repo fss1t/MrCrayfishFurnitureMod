@@ -18,7 +18,7 @@ public class ModItems
 {
     public static final DeferredRegister<Item> REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, Reference.MOD_ID);
 
-    public static final RegistryObject<Item> SPATULA = register("spatula", () -> new SwordItem(Tiers.IRON, 3, -1.4F, new Item.Properties()));
+    public static final RegistryObject<Item> SPATULA = register("spatula", () -> new SwordItem(Tiers.IRON, 3, -1.4F, new Item.Properties().tab(FurnitureMod.GROUP)));
 
     private static RegistryObject<Item> register(String name, Supplier<Item> item)
     {

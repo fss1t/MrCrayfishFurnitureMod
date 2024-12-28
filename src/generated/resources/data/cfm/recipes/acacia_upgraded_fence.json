@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "upgraded_fence",
   "key": {
     "L": {
@@ -17,6 +16,5 @@
   "result": {
     "count": 12,
     "item": "cfm:acacia_upgraded_fence"
-  },
-  "show_notification": true
+  }
 }

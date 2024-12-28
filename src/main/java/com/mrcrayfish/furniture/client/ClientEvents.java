@@ -2,6 +2,8 @@ package com.mrcrayfish.furniture.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Matrix3f;
+import com.mojang.math.Matrix4f;
 import com.mrcrayfish.furniture.FurnitureConfig;
 import com.mrcrayfish.furniture.Reference;
 import net.minecraft.client.Camera;
@@ -15,8 +17,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderHighlightEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.joml.Matrix3f;
-import org.joml.Matrix4f;
 
 /**
  * Author: MrCrayfish

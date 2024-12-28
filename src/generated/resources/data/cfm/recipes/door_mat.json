@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "key": {
     "W": {
       "item": "minecraft:wheat"
@@ -12,6 +11,5 @@
   ],
   "result": {
     "item": "cfm:door_mat"
-  },
-  "show_notification": true
+  }
 }

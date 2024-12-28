@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "picket_fence",
   "key": {
     "C": {
@@ -17,6 +16,5 @@
   "result": {
     "count": 12,
     "item": "cfm:brown_picket_fence"
-  },
-  "show_notification": true
+  }
 }

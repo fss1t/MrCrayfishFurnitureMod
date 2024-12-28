@@ -3,31 +3,28 @@ package com.mrcrayfish.furniture.datagen;
 import com.mrcrayfish.furniture.Reference;
 import com.mrcrayfish.furniture.common.ModTags;
 import com.mrcrayfish.furniture.core.ModBlocks;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagBuilder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Material;
-import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.concurrent.CompletableFuture;
 
 /**
  * @author Ocelot
  */
 public class BlockTagGen extends BlockTagsProvider
 {
-    public BlockTagGen(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper)
+    public BlockTagGen(DataGenerator generatorIn, ExistingFileHelper existingFileHelper)
     {
-        super(output, lookupProvider, Reference.MOD_ID, existingFileHelper);
+        super(generatorIn, Reference.MOD_ID, existingFileHelper);
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider provider)
+    protected void addTags()
     {
         // Picket fences connect to other picket fences
         this.tag(ModTags.Blocks.PICKET_FENCES)
@@ -105,14 +102,14 @@ public class BlockTagGen extends BlockTagsProvider
         this.tag(BlockTags.FENCE_GATES).addTag(ModTags.Blocks.UPGRADED_FENCE_GATES);
 
         // Dynamically gets all wooden blocks and marks them as mineable with an axe
-        IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> mineableWithAxe = this.tag(BlockTags.MINEABLE_WITH_AXE);
+        TagsProvider.TagAppender<Block> mineableWithAxe = this.tag(BlockTags.MINEABLE_WITH_AXE);
         ModBlocks.REGISTER.getEntries().stream()
                 .filter(s -> s.get().defaultBlockState().getMaterial() == Material.WOOD)
                 .map(RegistryObject::get)
                 .forEach(mineableWithAxe::add);
 
         // Dynamically gets all stone blocks and marks them as mineable with an pickaxe
-        IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> mineableWithPickaxe = this.tag(BlockTags.MINEABLE_WITH_PICKAXE);
+        TagsProvider.TagAppender<Block> mineableWithPickaxe = this.tag(BlockTags.MINEABLE_WITH_PICKAXE);
         ModBlocks.REGISTER.getEntries().stream()
                 .filter(s -> s.get().defaultBlockState().getMaterial() == Material.STONE || s.get().defaultBlockState().getMaterial() == Material.METAL)
                 .map(RegistryObject::get)
