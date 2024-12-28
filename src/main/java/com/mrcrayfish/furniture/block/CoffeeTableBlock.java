@@ -24,7 +24,7 @@ import java.util.List;
  * Author: MrCrayfish
  */
 //TODO update forge blockstate once
-public class CoffeeTableBlock extends FurnitureWaterloggedBlock
+public class CoffeeTableBlock extends FurnitureHorizontalBlock
 {
     public static final BooleanProperty NORTH = BooleanProperty.create("north");
     public static final BooleanProperty EAST = BooleanProperty.create("east");
@@ -37,14 +37,22 @@ public class CoffeeTableBlock extends FurnitureWaterloggedBlock
     public CoffeeTableBlock(Properties properties)
     {
         super(properties);
-        this.registerDefaultState(this.getStateDefinition().any().setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false).setValue(TALL, false));
+        this.registerDefaultState(this.getStateDefinition().any()
+                .setValue(NORTH, false)
+                .setValue(EAST, false)
+                .setValue(SOUTH, false)
+                .setValue(WEST, false)
+                .setValue(DIRECTION, Direction.NORTH)
+                .setValue(TALL, false));
         SHAPES = this.generateShapes(this.getStateDefinition().getPossibleStates());
     }
 
     private ImmutableMap<BlockState, VoxelShape> generateShapes(ImmutableList<BlockState> states)
     {
-        final VoxelShape TABLE_TOP_SHORT = Block.box(0.0, 6.0, 0.0, 16.0, 8.0, 16.0);
-        final VoxelShape TABLE_TOP_TALL = Block.box(0.0, 14.0, 0.0, 16.0, 16.0, 16.0);
+        //final VoxelShape TABLE_TOP_SHORT = Block.box(0.0, 6.0, 0.0, 16.0, 8.0, 16.0);
+        final VoxelShape[] TABLE_TOP_SHORT = VoxelShapeHelper.getRotatedShapes(VoxelShapeHelper.rotate(Block.box(0, 6, 0, 16, 8, 16), Direction.SOUTH));
+        //final VoxelShape TABLE_TOP_TALL = Block.box(0.0, 14.0, 0.0, 16.0, 16.0, 16.0);
+        final VoxelShape[] TABLE_TOP_TALL = VoxelShapeHelper.getRotatedShapes(VoxelShapeHelper.rotate(Block.box(0, 14, 0, 16, 16, 16), Direction.SOUTH));
         final VoxelShape LEG_SOUTH_EAST_TALL = Block.box(13.5, 0, 13.5, 15.5, 14, 15.5);
         final VoxelShape LEG_SOUTH_WEST_TALL = Block.box(0.5, 0, 13.5, 2.5, 14, 15.5);
         final VoxelShape LEG_NORTH_WEST_TALL = Block.box(0.5, 0, 0.5, 2.5, 14, 2.5);
@@ -62,9 +70,10 @@ public class CoffeeTableBlock extends FurnitureWaterloggedBlock
             boolean east = state.getValue(EAST);
             boolean south = state.getValue(SOUTH);
             boolean west = state.getValue(WEST);
+            Direction direction = state.getValue(DIRECTION);
 
             List<VoxelShape> shapes = new ArrayList<>();
-            shapes.add(tall ? TABLE_TOP_TALL : TABLE_TOP_SHORT);
+            shapes.add(tall ? TABLE_TOP_TALL[direction.get2DDataValue()] : TABLE_TOP_SHORT[direction.get2DDataValue()]);
             if(!north && !west)
             {
                 shapes.add(tall ? LEG_NORTH_WEST_TALL : LEG_NORTH_WEST_SHORT);

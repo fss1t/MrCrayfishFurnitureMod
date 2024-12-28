@@ -1,0 +1,7 @@
+{
+    "parent": "cfm:block/coffee_table_tall_east",
+    "textures": {
+        "top": "block/stripped_warped_log",
+        "legs": "block/warped_log"
+    }
+}
