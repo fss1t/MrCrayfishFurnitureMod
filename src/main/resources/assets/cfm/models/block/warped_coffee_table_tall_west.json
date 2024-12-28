@@ -1,7 +1,7 @@
 {
     "parent": "cfm:block/coffee_table_tall_west",
     "textures": {
-        "top": "block/warped_log",
-        "legs": "block/stripped_warped_log"
+        "top": "block/warped_stem",
+        "legs": "block/stripped_warped_stem"
     }
 }

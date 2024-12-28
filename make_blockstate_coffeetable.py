@@ -15,12 +15,13 @@ def main():
             path_type_coffeetable.unlink(missing_ok=True)
 
         type_leg = type[9:] if "stripped_" in type else f"stripped_{type}"
+        log = "stem" if "crimson" in type or "warped" in type else "log"
         for coffeetable_parent in list_coffeetable_parent:
             data = {
                 "parent": f"cfm:block/{coffeetable_parent}",
                 "textures": {
-                    "top": f"block/{type}_log",
-                    "legs": f"block/{type_leg}_log"
+                    "top": f"block/{type}_{log}",
+                    "legs": f"block/{type_leg}_{log}"
                 }
             }
 

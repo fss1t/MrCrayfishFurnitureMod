@@ -1,7 +1,7 @@
 {
     "parent": "cfm:block/coffee_table_short_northwest",
     "textures": {
-        "top": "block/crimson_log",
-        "legs": "block/stripped_crimson_log"
+        "top": "block/crimson_stem",
+        "legs": "block/stripped_crimson_stem"
     }
 }
